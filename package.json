@@ -1,22 +1,22 @@
 {
-  "name": "troll",
+  "name": "facebyte",
   "version": "0.0.0",
-  "description": "troll ========",
+  "description": "facebyte ========",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/braungoodson/troll"
+    "url": "ssh://git@github.com/braungoodson/facebyte"
   },
   "keywords": [
-    "troll"
+    "facebyte"
   ],
   "author": "Braun Goodson <braungoodson@gmail.com>",
   "license": "None",
   "bugs": {
-    "url": "https://github.com/braungoodson/troll/issues"
+    "url": "https://github.com/braungoodson/facebyte/issues"
   },
   "dependencies": {
     "mongodb": "~1.4.0",

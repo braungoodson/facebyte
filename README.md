@@ -1,7 +1,7 @@
-troll
+facebyte
 ========
 
-The troll's HTTP port is 30000. The troll's database request if `localhost:20000` (i.e., a mongodb troll data instance running at `localhost:20000`).
+The facebyte's HTTP port is 30000. The facebyte's database request if `localhost:20000` (i.e., a mongodb facebyte data instance running at `localhost:20000`).
 
 Then to instaniate the services:
 
@@ -12,10 +12,10 @@ Then to instaniate the services:
 
 Sample instance:
 
-	$ ./start_db.sh /local/troll/mongod 20000
+	$ ./start_db.sh /local/facebyte/mongod 20000
 		...
 		^c
-	$ ./create_db.sh /local/troll/mongo 20000
+	$ ./create_db.sh /local/facebyte/mongo 20000
 		...
 	$ npm install
 		...
