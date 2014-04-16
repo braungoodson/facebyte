@@ -32,8 +32,11 @@ facebyte.controller('urlController',['$scope',function($scope){
 		$scope.urls = [];
 		$scope.urls = [
 			new Url('/views/home','Home'),
-			new Url('/views/users/read','Users'),
-			new Url('/views/users/create','Create User')
+			new Url('/views/home','Login'),
+			new Url('/views/users/create','Create Users'),
+			new Url('/views/users/read','Read Users'),
+			new Url('/views/users/read','Update Users'),
+			new Url('/views/users/read','Delete Users'),
 		];
 	}
 }]);
@@ -65,7 +68,9 @@ facebyte.controller('usersReadController',['$scope','$http','$facebyteCacheFacto
 			});
 	}
 }]);
-facebyte.controller('usersCreateController',['$scope','$http','$facebyteCacheFactory',function($scope,$http,$facebyteCacheFactory){
+facebyte.controller('usersCreateController',[
+	'$scope','$http','$location','$facebyteCacheFactory',
+	function($scope,$http,$location,$facebyteCacheFactory){
 	$scope.user = $facebyteCacheFactory.getUser();
 	$scope.createUser = createUser;
 	(function f (next) {
@@ -113,17 +118,18 @@ facebyte.controller('usersCreateController',['$scope','$http','$facebyteCacheFac
 						+ $scope.user.passwordBase64() + '/'
 						+ $scope.user.facebyteBase64()
 			}).success(function(d,s,h,c){
-				console.log(d,s,h(),c);
+				//console.log(d,s,h(),c);
 				if (s == 200) {
 					if (d.length) {
 						if (d.error) {
-							console.log(d,h());
+							console.log(d.error,d,h());
 						} else {
-							console.log(d);
+							//console.log(d);
 							$scope.user.token = d.token;
+							$location.path('/views/users/read')
 						}
 					} else {
-						console.warn(d,h());
+						console.warn(d.length,d,h());
 					}
 				} else {
 					console.error(d,h());
