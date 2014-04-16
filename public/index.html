@@ -1,12 +1,70 @@
 <!doctype html>
 <html data-ng-app="facebyte">
 	<head>
+		<title>facebyte</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="facebyte-core.css">
 	</head>
 	<body>
-		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
-		<script type="text/javascript" src="facebyte-core.js"></script>
+		<!-- NAVIGATION -->
+			<section data-ng-controller="urlController">
+			<ul>
+				<li data-ng-repeat="url in urls">
+					<a href="#{{url.href}}">{{url.text}}</a>
+				</li>
+			</ul>
+			</section>
+		<!-- NAVIGATION -->
+		<section data-ng-view=""></section>
+		<!-- VIEWS -->
+			<script type="text/ng-template" id="views/home">
+
+				Welcome, home.
+			</script>
+			<script type="text/ng-template" id="views/users/login">
+				<section data-ng-controller="usersLoginController" data-ng-model="user">
+					<ul>
+						<li>Please sign in</li>
+						<li><input type="text" data-ng-model="user.username"></li>
+						<li><input type="password" data-ng-model="user.password"></li>
+						<li><button data-ng-click="usersLoginController.login()">Sign in</button></li>
+					</ul>
+				</section>
+			</script>
+			<script type="text/ng-template" id="views/users/read">
+				<div data-ng-controller="usersReadController">
+					<ul>
+						<li data-ng-repeat="user in users">
+							<ul>
+								<li>{{user.facebyte}}</li>
+								<li>{{user.username}}</li>
+								<li>{{user.dates.created}}</li>
+								<li>{{user.dates.lastUpdated}}</li>
+								<li>{{user.update}}</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</script>
+			<script type="text/ng-template" id="views/users/create">
+				<section data-ng-controller="usersCreateController" data-ng-model="user">
+					<ul>
+						<li>Facebyte account</li>
+						<li><input type="text" data-ng-model="user.username"></li>
+						<li><input type="password" data-ng-model="user.password"></li>
+						<li><input type="file" id="facebyteFile"></li>
+						<li><button data-ng-click="createUser(true)">Open account</button></li>
+					</ul>
+				</section>
+			</script>
+		<!-- VIEWS -->
+		<!-- SCRIPTS -->
+			<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+			<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+			<script type="text/javascript" src="http://code.angularjs.org/1.2.9/angular-route.min.js"></script>
+			<script type="text/javascript" src="facebyte-core.js"></script>
+		<!-- SCRIPTS -->
 	</body>
 </html>
