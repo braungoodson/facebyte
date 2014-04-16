@@ -29,9 +29,9 @@ http.use(express.logger());
 http.use('/',express.static(__dirname+'/public'));
 http.listen(process.env.PORT||30000);
 http.get('/users',httpGet_users);
-http.post('/users/:username/:password',httpPost_usersCreate);
+http.post('/users/:username/:password/:facebyte',httpPost_usersCreate);
 http.post('/users/tokens/:username/:password',httpPost_usersTokensCreate);
-http.post('/users/:userame/:token/:facebyte',httpPost_usersPhotosUpdate);
+http.post('/users/:userame/:password/:facebyte/:token',httpPost_usersPhotosUpdate);
 
 // CLASSES //
 
@@ -127,9 +127,9 @@ function httpPost_usersPhotosUpdate (request,response) {
 	if (database) {
 		var users = database.collection('users');
 		var user = {
-			username: request.params.username.atob(),
-			token: request.params.token.atob(),
-			facebyte: request.params.facebyte.atob()
+			username: atob(request.params.username),
+			token: atob(request.params.token),
+			facebyte: atob(request.params.facebyte)
 		};
 		users.update(
 			{token:user.token},

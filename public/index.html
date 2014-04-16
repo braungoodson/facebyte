@@ -37,7 +37,7 @@
 					<ul>
 						<li data-ng-repeat="user in users">
 							<ul>
-								<li>{{user.facebyte}}</li>
+								<li><img src="{{user.facebyte}}" height="50px" ></li>
 								<li>{{user.username}}</li>
 								<li>{{user.dates.created}}</li>
 								<li>{{user.dates.lastUpdated}}</li>
@@ -54,7 +54,7 @@
 						<li><input type="text" data-ng-model="user.username"></li>
 						<li><input type="password" data-ng-model="user.password"></li>
 						<li><input type="file" id="facebyteFile"></li>
-						<li><button data-ng-click="createUser(true)">Open account</button></li>
+						<li><button data-ng-click="createUser()">Open account</button></li>
 					</ul>
 				</section>
 			</script>
