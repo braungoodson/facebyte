@@ -71,7 +71,8 @@ facebyte.controller('usersReadController',['$scope','$http','$facebyteCacheFacto
 facebyte.controller('usersCreateController',[
 	'$scope','$http','$location','$facebyteCacheFactory',
 	function($scope,$http,$location,$facebyteCacheFactory){
-	$scope.user = $facebyteCacheFactory.getUser();
+	$scope.user = new User();
+	$scope.canvas = new Facebyte2DCanvas();
 	$scope.createUser = createUser;
 	(function f (next) {
 		var input = document.getElementById('facebyteFile');
@@ -91,7 +92,6 @@ facebyte.controller('usersCreateController',[
 					default : return true;
 				}
 			}
-			console.log(file.type)
 			if (unsupportedFileType(file.type)) {
 				throw new Error('Filetype not supported.')
 			}
@@ -103,9 +103,10 @@ facebyte.controller('usersCreateController',[
 			reader.readAsDataURL(file);
 		});		
 	}(function(payload){
-		console.log(payload);
-		// set this to the user's facebyte
-		$scope.user.facebyte = payload;
+		$scope.canvas.draw2dFacebyte(payload);
+		$scope.user.facebyte = $scope.canvas.toFacebyte();
+		console.log(payload)
+		console.log($scope.user.facebyte);
 	}));
 	function createUser (debug) {
 		if (debug) {
@@ -114,31 +115,51 @@ facebyte.controller('usersCreateController',[
 			$http({
 					method: 'POST',
 					url: 'http://localhost:30000/users' + '/'
-						+ $scope.user.usernameBase64() + '/' 
-						+ $scope.user.passwordBase64() + '/'
-						+ $scope.user.facebyteBase64()
+						+ $scope.user.userAttributeEncoded($scope.user.username) + '/' 
+						+ $scope.user.userAttributeEncoded($scope.user.password) + '/'
+						+ $scope.user.userAttributeEncoded($scope.user.facebyte)
 			}).success(function(d,s,h,c){
-				//console.log(d,s,h(),c);
 				if (s == 200) {
-					if (d.length) {
+					//if (d.length) {
 						if (d.error) {
-							console.log(d.error,d,h());
+							console.log('error',d.error,d,h());
 						} else {
-							//console.log(d);
 							$scope.user.token = d.token;
 							$location.path('/views/users/read')
 						}
-					} else {
-						console.warn(d.length,d,h());
-					}
+					//} else {
+						//console.warn('no length',d.length,d,h());
+					//}
 				} else {
-					console.error(d,h());
+					console.error('not 200',d,h());
 				}
 			});
 		}
 	}
 }]);
 
+function Facebyte2DCanvas () {
+	var canvas = document.getElementById('facebyteCanvas');
+	var context = canvas.getContext('2d');
+	function Draw2DFacebyte (facebyte) {
+		// drawImage(image,upperLeftXCoordinate,upperLeftYCoordinate,desiredWidth,desiredImageHeight)
+		var image = new Image();
+		image.src = facebyte;
+		image.onload = image_onLoadHandler;
+		function image_onLoadHandler () {
+			context.drawImage(image,0,0,300,300);
+		}
+	}
+	function ToFacebyte () {
+		return canvas.toDataURL('image/jpeg');
+	}
+	return {
+		canvas: canvas,
+		context: context,
+		draw2dFacebyte: Draw2DFacebyte,
+		toFacebyte: ToFacebyte
+	}
+}
 function Url (url,text) {
 	this.href = url || "null";
 	this.text = text || "Hyperlink";

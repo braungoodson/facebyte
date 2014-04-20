@@ -1,5 +1,6 @@
 body {
 	background-color:#312e30;
+	color:white;
 }
 
 @media screen
@@ -29,4 +30,37 @@ body {
 
 .signup {
 	background: #777e77;
+}
+
+.facebyteOpenAccount {
+	background-color:#6C798C;
+	border-color:#6C798C;
+}
+
+#facebyteCanvas {
+	border-radius:15px;
+
+}
+
+.colour-white h1,
+.colour-white h3 {
+	color: white;
+}
+
+.navbar-default {
+	background-color:#312e30;
+	border-color:#312e30;
+	border-radius:0px;
+}
+
+input {
+	color:black;
+}
+
+input#facebyteFile {
+	color:white;
+}
+
+canvas {
+	border:1px solid #6C798C;
 }
